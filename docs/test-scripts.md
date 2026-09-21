@@ -31,6 +31,7 @@ the default fast unit test suite.
 | `tests/openwakeword_test.py` | Wake word demo | OpenWakeWord demo using local sample wake word models in the `tests/` folder. |
 | `tests/realtime_loop_test.py` | Realtime demo | Exercises realtime transcription in a loop. |
 | `tests/realtimestt_chinese.py` | Language demo | Demonstrates Chinese transcription settings. |
+| `tests/realtimestt_live_translate.py` | Live translation demo | Live microphone transcription and translation using a llama.cpp OpenAI-compatible endpoint. |
 | `tests/vad_test.py` | VAD demo | Manual VAD behavior check. |
 
 Use these when developing locally with a microphone and real models. They may
@@ -100,6 +101,21 @@ Boundary detector microphone visualizer:
 ```bash
 python tests/realtime_boundary_detector_microphone.py --sensitivity 0.6
 ```
+
+Live translation using a llama.cpp server with an OpenAI-compatible `/v1/chat/completions` endpoint:
+
+```bash
+python tests/realtimestt_live_translate.py \
+    --language ja \
+    --target-language English \
+    --llama-url http://127.0.0.1:8080 \
+    --llama-model Gemma-4-E4B
+```
+
+For Linux sound card playback capture, add `--pulse-source <sink>.monitor --input-device-index <pulse-index>`.
+Find the monitor name with `pactl list sources short` and the PyAudio `pulse` index with
+`python tests/realtime_boundary_detector_microphone.py --list-devices`.
+PyAudio indices can change and differ from `pactl` IDs.
 
 ## Safety Notes
 
